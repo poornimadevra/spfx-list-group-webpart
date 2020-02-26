@@ -1,0 +1,69 @@
+filename, language, Properties, JSON, Markdown, JavaScript, TypeScript, TypeScript React, SCSS, comment, blank, total
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\.editorconfig, Properties, 13, 0, 0, 0, 0, 0, 0, 5, 7, 25
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\.yo-rc.json, JSON, 0, 12, 0, 0, 0, 0, 0, 0, 0, 12
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\README.md, Markdown, 0, 0, 19, 0, 0, 0, 0, 0, 8, 27
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\config\config.json, JSON, 0, 20, 0, 0, 0, 0, 0, 0, 0, 20
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\config\copy-assets.json, JSON, 0, 4, 0, 0, 0, 0, 0, 0, 1, 5
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\config\deploy-azure-storage.json, JSON, 0, 7, 0, 0, 0, 0, 0, 0, 0, 7
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\config\package-solution.json, JSON, 0, 14, 0, 0, 0, 0, 0, 0, 1, 15
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\config\serve.json, JSON, 0, 10, 0, 0, 0, 0, 0, 0, 1, 11
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\config\write-manifests.json, JSON, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\gulpfile.js, JavaScript, 0, 0, 0, 21, 0, 0, 0, 0, 4, 25
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\package-lock.json, JSON, 0, 19633, 0, 0, 0, 0, 0, 0, 1, 19634
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\package.json, JSON, 0, 59, 0, 0, 0, 0, 0, 0, 1, 60
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\index.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\DownerStandardDetailsListGroupedWebPart.manifest.json, JSON, 0, 49, 0, 0, 0, 0, 0, 4, 4, 57
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\DownerStandardDetailsListGroupedWebPart.ts, TypeScript, 0, 0, 0, 0, 413, 0, 0, 8, 43, 464
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\components\AlertMeForm.tsx, TypeScript React, 0, 0, 0, 0, 0, 57, 0, 0, 8, 65
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\components\ContextualMenuComponent.tsx, TypeScript React, 0, 0, 0, 0, 0, 208, 0, 0, 7, 215
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\components\DetailsListApp.tsx, TypeScript React, 0, 0, 0, 0, 0, 49, 0, 0, 4, 53
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\components\DetailsListComponent.tsx, TypeScript React, 0, 0, 0, 0, 0, 263, 0, 4, 30, 297
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\components\DetailsListComponentRenders.tsx, TypeScript React, 0, 0, 0, 0, 0, 85, 0, 3, 8, 96
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\components\FeedbackForm.tsx, TypeScript React, 0, 0, 0, 0, 0, 110, 0, 0, 11, 121
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\components\Footer.tsx, TypeScript React, 0, 0, 0, 0, 0, 27, 0, 0, 2, 29
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\components\ShareLinkForm.tsx, TypeScript React, 0, 0, 0, 0, 0, 18, 0, 0, 3, 21
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\components\TopPanel.tsx, TypeScript React, 0, 0, 0, 0, 0, 132, 0, 0, 6, 138
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\constances\topMenu.tsx, TypeScript React, 0, 0, 0, 0, 0, 144, 0, 0, 8, 152
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\contexts\AppSettingsContext.tsx, TypeScript React, 0, 0, 0, 0, 0, 19, 0, 0, 5, 24
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\contexts\FeedbackContext.tsx, TypeScript React, 0, 0, 0, 0, 0, 19, 0, 0, 5, 24
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\contexts\SPFieldsContext.tsx, TypeScript React, 0, 0, 0, 0, 0, 52, 0, 0, 8, 60
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\contexts\SPItemsContext.tsx, TypeScript React, 0, 0, 0, 0, 0, 79, 0, 20, 11, 110
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\contexts\UrlQueryFilterContext.tsx, TypeScript React, 0, 0, 0, 0, 0, 23, 0, 0, 6, 29
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\hooks\useIFrameContext.ts, TypeScript, 0, 0, 0, 0, 28, 0, 0, 0, 5, 33
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\interfaces\IAppSettingsContext.ts, TypeScript, 0, 0, 0, 0, 3, 0, 0, 0, 1, 4
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\interfaces\IDetailsListAppProps.ts, TypeScript, 0, 0, 0, 0, 20, 0, 0, 0, 2, 22
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\interfaces\IFeedbackContext.ts, TypeScript, 0, 0, 0, 0, 4, 0, 0, 0, 2, 6
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\interfaces\IFeedbackForm.ts, TypeScript, 0, 0, 0, 0, 6, 0, 0, 0, 1, 7
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\interfaces\IRootFolder.ts, TypeScript, 0, 0, 0, 0, 5, 0, 0, 0, 1, 6
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\interfaces\ISPFieldsContext.ts, TypeScript, 0, 0, 0, 0, 9, 0, 0, 0, 2, 11
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\interfaces\ISharePoint.ts, TypeScript, 0, 0, 0, 0, 84, 0, 0, 0, 4, 88
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\interfaces\IUrlQueryFilterContext.ts, TypeScript, 0, 0, 0, 0, 5, 0, 0, 0, 2, 7
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\interfaces\IWebPartMappers.ts, TypeScript, 0, 0, 0, 0, 16, 0, 0, 0, 3, 19
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\loc\en-us.js, JavaScript, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\loc\mystrings.d.ts, TypeScript, 0, 0, 0, 0, 9, 0, 0, 0, 2, 11
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\mappers\DetailsListComponentMapper.ts, TypeScript, 0, 0, 0, 0, 138, 0, 0, 20, 18, 176
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\mappers\SPItemsContextMapper.tsx, TypeScript React, 0, 0, 0, 0, 0, 47, 0, 12, 9, 68
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\mappers\WebPartMappers.ts, TypeScript, 0, 0, 0, 0, 58, 0, 0, 0, 7, 65
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\services\SharePointService.ts, TypeScript, 0, 0, 0, 0, 298, 0, 0, 9, 48, 355
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\styles\DetailsList.module.scss, SCSS, 0, 0, 0, 0, 0, 0, 13, 0, 3, 16
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\styles\DetailsListApp.module.scss, SCSS, 0, 0, 0, 0, 0, 0, 61, 3, 11, 75
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\styles\Icons.tsx, TypeScript React, 0, 0, 0, 0, 0, 90, 0, 0, 8, 98
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\styles\styleObjects.tsx, TypeScript React, 0, 0, 0, 0, 0, 24, 0, 0, 5, 29
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\alertMeLink.ts, TypeScript, 0, 0, 0, 0, 5, 0, 0, 0, 2, 7
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\appPrefix.ts, TypeScript, 0, 0, 0, 0, 18, 0, 0, 0, 4, 22
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\columnTypes.ts, TypeScript, 0, 0, 0, 0, 1, 0, 0, 0, 1, 2
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\copyAndSort.ts, TypeScript, 0, 0, 0, 0, 12, 0, 0, 0, 1, 13
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\copyLink.ts, TypeScript, 0, 0, 0, 0, 5, 0, 0, 0, 3, 8
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\dowloadSingleFile.ts, TypeScript, 0, 0, 0, 0, 8, 0, 0, 0, 3, 11
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\exportToExcel.ts, TypeScript, 0, 0, 0, 0, 5, 0, 0, 0, 2, 7
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\getFileExtension.ts, TypeScript, 0, 0, 0, 0, 4, 0, 0, 0, 2, 6
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\getZippedFiles.ts, TypeScript, 0, 0, 0, 0, 12, 0, 0, 0, 2, 14
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\linkToDocument.ts, TypeScript, 0, 0, 0, 0, 10, 0, 0, 0, 3, 13
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\newDocument.ts, TypeScript, 0, 0, 0, 0, 5, 0, 0, 0, 3, 8
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\openInLink.ts, TypeScript, 0, 0, 0, 0, 12, 0, 0, 0, 3, 15
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\shareLink.ts, TypeScript, 0, 0, 0, 0, 5, 0, 0, 1, 4, 10
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\xmlPerser.ts, TypeScript, 0, 0, 0, 0, 11, 0, 0, 9, 7, 27
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\src\webparts\downerStandardDetailsListGrouped\utils\zipFiles.ts, TypeScript, 0, 0, 0, 0, 12, 0, 0, 0, 3, 15
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\tsconfig.json, JSON, 0, 23, 0, 0, 0, 0, 0, 0, 1, 24
+c:\Projects-Dev\SharePoint-modern\SPFx\webparts\downer-standard-detailsList-grouped\tslint.json, JSON, 0, 30, 0, 0, 0, 0, 0, 0, 1, 31
+Total, -, 13, 19865, 19, 28, 1221, 1446, 74, 99, 373, 23138

@@ -1,0 +1,102 @@
+else if (groupByField.level === 1) {
+    return (
+      // getValueByField(i, groupByField.internalName) === uniqueValue &&
+      // uniqueValues[uniqueValue][0]["LinkFilenameNoMenu"] ===
+
+      //   getValueByField(i, "LinkFilenameNoMenu")
+
+      getValueByField(i, groupByField.internalName) === uniqueValue &&
+      getValueByField(
+        uniqueValues[uniqueValue][0],
+        prevGroupByField.internalName
+      ) === getValueByField(i, prevGroupByField.internalName)
+    );
+  } else if (groupByField.level === 2) {
+    return (
+      // getValueByField(i, groupByField.internalName) === uniqueValue &&
+      // uniqueValues[uniqueValue][0]["LinkFilenameNoMenu"] ===
+
+      //   getValueByField(i, "LinkFilenameNoMenu")
+
+      getValueByField(i, groupByField.internalName) === uniqueValue &&
+      // getValueByField( uniqueValues[uniqueValue][0], prevGroupByField.internalName) === getValueByField(i, prevGroupByField.internalName)
+
+      getValueByField(
+        uniqueValues[uniqueValue][0],
+        prevGroupByFieldsV2[0].internalName
+      ) === getValueByField(i, prevGroupByFieldsV2[0].internalName) &&
+      getValueByField(
+        uniqueValues[uniqueValue][0],
+        prevGroupByFieldsV2[1].internalName
+      ) === getValueByField(i, prevGroupByFieldsV2[1].internalName)
+    );
+  }
+
+
+
+?????????????????????
+
+
+export const groupsMapper = (
+    groupByFields: IGroupByField[],
+    listItems: IListItem[] | any[],
+    currentDepth: number,
+    isCollapsed: boolean,
+    rawItems?: any[],
+    prevUniqueValue?: string
+  ): IGroup[] => {
+    const groups: IGroup[] = [];
+    const groupByField = groupByFields.find(g => g.level === currentDepth);
+    const prevGroupByField = groupByFields.find(
+      prevG => prevG.level === currentDepth - 1
+    );
+    const uniqueValues = groupBy(listItems, item =>
+      getValueByField(item, groupByField.internalName)
+    );
+  
+    for (const uniqueValue in uniqueValues) {
+      const { title, orderIndex } = extractOrderAndTitle(uniqueValue);
+  
+      groups.push({
+        name: `${title ? title : "no value"}`,
+        count: uniqueValues[uniqueValue].length,
+        key: uniqueValue,
+        level: groupByField.level,
+        startIndex: findIndex(rawItems ? rawItems : listItems, (i: any) => {
+          if (groupByField.level === 0)
+            return getValueByField(i, groupByField.internalName) === uniqueValue;
+          else
+            return (
+              // getValueByField(i, groupByField.internalName) === uniqueValue &&
+              // uniqueValues[uniqueValue][0]["LinkFilenameNoMenu"] ===
+              //   getValueByField(i, "LinkFilenameNoMenu")
+  
+              getValueByField(i, groupByField.internalName) === uniqueValue 
+              
+              
+              &&
+  
+              getValueByField(
+                uniqueValues[uniqueValue][0],
+                prevGroupByField.internalName
+              ) === getValueByField(i, prevGroupByField.internalName)
+            );
+        }),
+        children:
+          currentDepth < groupByFields.length - 1
+            ? groupsMapper(
+                groupByFields,
+                uniqueValues[uniqueValue],
+                currentDepth + 1,
+                isCollapsed,
+                listItems,
+                uniqueValue
+              )
+            : [],
+        isCollapsed: isCollapsed,
+        order: orderIndex ? orderIndex : 0
+      } as IGroup);
+    }
+    return orderBy(groups, ["order"]);
+  };
+  
