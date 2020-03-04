@@ -26,3 +26,11 @@ export const iconClassNames = mergeStyleSets({
     maxWidth: "16px"
   }
 });
+
+export const checkMarkStyle = () => ({
+  root: { backgroundColor: "#599b00", fontSize: 50 }
+});
+
+export const addAddLinkIconStyle = () => ({
+  root: { height: 30, verticalAlign: "sub" }
+});

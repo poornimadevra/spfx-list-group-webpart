@@ -15,20 +15,6 @@ export const removeFolders = (items: any): any[] => {
   return items.filter((i: any) => i.FileSystemObjectType === 0);
 };
 
-// export const itemsReMapper = (items: any[]): any[] => {
-//   return items.map(item => {
-//     const obj = {
-//       // LinkFilenameNoMenu: item.Name,
-//       DocumentId: item["OData__dlc_DocId"],
-//       ...item,
-//       ...item.ListItemAllFields
-//     };
-//     delete obj.ListItemAllFields;
-
-//     return obj;
-//   });
-// };
-
 export const itemsMapper = (items: any, fields: any[]): any[] => {
   const mappedItems = [];
   const itemsWithNoFolders = removeFolders(items);

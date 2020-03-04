@@ -8,7 +8,6 @@ import { AppSettingsContextProvider } from "../contexts/AppSettingsContext";
 import { UrlQueryFilterContextProvider } from "../contexts/UrlQueryFilterContext";
 import { DetailsListComponent } from "./DetailsListComponent";
 import { FeedbackContextProvider } from "../contexts/FeedbackContext";
-import { Header } from "./Header";
 import { TopPanel } from "./TopPanel";
 import { Footer } from "./Footer";
 
@@ -20,14 +19,13 @@ export const DetailsListApp: React.FC<IDetailsListAppProps> = (
   }, []);
 
   const getJSX = () => {
-    return props.selectedListTitle ? (
+    return props.selectedListTitle && props.selectedViewFields.length > 0 ? (
       <UrlQueryFilterContextProvider {...props}>
         <AppSettingsContextProvider {...props}>
           <SPFieldsContextProvider {...props}>
             <SPItemsContextProvider {...props}>
               <FeedbackContextProvider {...props}>
                 <div className="appWrapper">
-                  {/* <Header {...props} /> */}
                   <TopPanel {...props} />
                   <DetailsListComponent {...props} />
                   {props.footer && <Footer />}

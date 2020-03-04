@@ -10,6 +10,7 @@ export interface IDetailsListAppProps {
   selectedViewTitle: string;
   selectedViewCamlQuery: string;
   selectedViewFields: IViewField[];
+  showItemsCount: boolean;
   selectedGroupByFields: IGroupByField[];
   selectedSortByFields: ISortByField[];
   urlParams?: UrlQueryParameterCollection;

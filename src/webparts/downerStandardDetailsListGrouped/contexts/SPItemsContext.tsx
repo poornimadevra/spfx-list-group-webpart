@@ -4,8 +4,6 @@ import SharePointService from "../services/SharePointService";
 import { IListItem } from "../interfaces/ISharePoint";
 import { itemsMapper, itemsReMapper } from "../mappers/SPItemsContextMapper";
 import { SPFieldsContext } from "../contexts/SPFieldsContext";
-import { orderItemsByGroups } from "../mappers/DetailsListComponentMapper";
-import { sortBy } from "lodash";
 import { IDetailsListAppProps } from "../interfaces/IDetailsListAppProps";
 
 export interface ISPItemsContext {
@@ -45,12 +43,7 @@ export const SPItemsContextProvider: React.FC<IDetailsListAppProps> = (
   const [queryUrlFilterGroupByField, setQueryUrlFilterGroupByField] = useState<
     string
   >("");
-  const {
-    groupByFields,
-    sortByFields,
-    viewFields,
-    selectedListId
-  } = useContext(SPFieldsContext);
+  const { viewFields, selectedListId } = useContext(SPFieldsContext);
 
   const [clearSelection, setClearSelection] = useState(false);
 
@@ -60,65 +53,21 @@ export const SPItemsContextProvider: React.FC<IDetailsListAppProps> = (
       selectedViewCamlQuery,
       ["File"],
       selectedFoldersPaths
-
-      // ["*", "File"]
     );
 
     const reMappedItems = itemsReMapper(itemsResult);
-
     const mappedItems = itemsMapper(reMappedItems, viewFields);
 
-    const sortedItems = sortBy(
-      mappedItems,
-      sortByFields.map(s => s.internalName)
-    );
-
-    const groupedItems = orderItemsByGroups(sortedItems, groupByFields);
-
-    setListItems(groupedItems);
+    setListItems(mappedItems);
   };
 
-  // const getListItems = async (): Promise<void> => {
-  //   // const items = await SharePointService.pnp_getListItemsAdvanced(
-  //   //   selectedListTitle,
-  //   //   ["*", "File"],
-  //   //   ["File"]
-  //   // );
-
-  //   const items = await SharePointService.pnp_getLibraryFiles(
-  //     selectedListInternalName,
-  //     ["ListItemAllFields"]
-  //   );
-  //   console.log("items", items);
-  //   const reMappedItems = itemsReMapper(items);
-  //   const mappedItems = itemsMapper(reMappedItems, viewFields);
-  //   const sortedItems = sortBy(
-  //     mappedItems,
-  //     sortByFields.map(s => s.internalName)
-  //   );
-  //   const groupedItems = orderItemsByGroups(sortedItems, groupByFields);
-  //   setListItems(groupedItems);
-  // };
-
+  //fetch items from SP, re-fetching when dependencies changed
   useEffect(() => {
-    if (selectedListTitle && selectedViewCamlQuery) getListItemsByCamlQuery();
-  }, [selectedListTitle, selectedViewCamlQuery, sortByFields]);
+    if (selectedListTitle && selectedFoldersPaths && selectedViewCamlQuery) {
+      getListItemsByCamlQuery();
+    }
+  }, [selectedListTitle, selectedFoldersPaths, selectedViewCamlQuery]);
 
-  useEffect(() => {
-    if (selectedListTitle && selectedViewCamlQuery) getListItemsByCamlQuery();
-  }, [selectedListTitle, selectedViewCamlQuery]);
-
-  useEffect(() => {
-    const sortedItems = sortBy(
-      listItems,
-      sortByFields.map(s => s.internalName)
-    );
-    const groupedItems = orderItemsByGroups(sortedItems, groupByFields);
-
-    setListItems(groupedItems);
-  }, [sortByFields]);
-
-  // groupByFields, sortByFields
   return (
     <React.Fragment>
       {listItems.length > 0 && (

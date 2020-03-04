@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IGroup, IColumn, findIndex } from "office-ui-fabric-react";
-import { orderBy, groupBy } from "lodash";
+import { orderBy, groupBy, sortBy } from "lodash";
 import { IListItem } from "../interfaces/ISharePoint";
 import { IViewField, IGroupByField } from "../interfaces/IWebPartMappers";
 
@@ -63,13 +63,8 @@ export const columnsMapper = (
 export const getValueByField = (
   item: any,
   field: string
-): string | number | undefined => {
-  // if ((!field || !item) && !item[field] && !item["OData_" + field]) {
-  //   return undefined;
-  // }
-  // console.log(item[field] ? item[field] : item["OData_" + field]);
-  return item[field] ? item[field] : item["OData_" + field];
-};
+): string | number | undefined =>
+  item[field] ? item[field] : item["OData_" + field];
 
 export const checkODataField = (items: any[], field: string): string => {
   const isOdata = items.some(i => i["OData_" + field]);
@@ -92,24 +87,14 @@ export const orderItemsByGroups = (
   );
 };
 
-// const checkPrevValue = (
-//   prevUniqueValue: string,
-//   uniqueValues: any,
-//   uniqueValue: string,
-//   groupByFields: IGroupByField[],
-//   currentDepth: number
-// ): boolean => {
-//   const prevGroupByField = groupByFields.find(
-//     groupByField => groupByField.level === currentDepth - 1
-//   );
+export const sortedItemsByGroups = (items: any[], sortByFields: any[]) => {
+  const sortedItems = sortBy(
+    items,
+    sortByFields.map(s => s.internalName)
+  );
 
-//   if (!prevGroupByField) return false;
-
-//   return uniqueValues[uniqueValue].some(
-//     (u: any) =>
-//       getValueByField(u, prevGroupByField.internalName) === prevUniqueValue
-//   );
-// };
+  return sortedItems;
+};
 
 export const groupsMapper = (
   groupByFields: IGroupByField[],
@@ -117,7 +102,6 @@ export const groupsMapper = (
   currentDepth: number,
   isCollapsed: boolean,
   rawItems?: any[]
-  // prevUniqueValue?: string
 ): IGroup[] => {
   const groups: IGroup[] = [];
   const groupByField = groupByFields.find(g => g.level === currentDepth);
@@ -148,10 +132,6 @@ export const groupsMapper = (
           return getValueByField(i, groupByField.internalName) === uniqueValue;
         } else
           return (
-            // getValueByField(i, groupByField.internalName) === uniqueValue &&
-            // uniqueValues[uniqueValue][0]["LinkFilenameNoMenu"] ===
-            //   getValueByField(i, "LinkFilenameNoMenu")
-
             getValueByField(i, groupByField.internalName) === uniqueValue &&
             getValueByField(
               uniqueValues[uniqueValue][0],
@@ -167,7 +147,6 @@ export const groupsMapper = (
               currentDepth + 1,
               isCollapsed,
               groupedItems
-              // uniqueValue
             )
           : [],
       isCollapsed: isCollapsed,

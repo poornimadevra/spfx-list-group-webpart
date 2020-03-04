@@ -53,6 +53,7 @@ export default class DownerStandardDetailsListGroupedWebPart extends BaseClientS
       selectedViewId,
       selectedViewCamlQuery,
       selectedViewFieldsMapped,
+      showItemsCount,
       selectedGroupByFieldsMapped,
       selectedSortByFieldsMapped,
       urlQueryActive,
@@ -74,6 +75,7 @@ export default class DownerStandardDetailsListGroupedWebPart extends BaseClientS
         selectedViewTitle: selectedView,
         selectedViewCamlQuery,
         selectedViewFields: selectedViewFieldsMapped,
+        showItemsCount,
         selectedGroupByFields: selectedGroupByFieldsMapped,
         selectedSortByFields: selectedSortByFieldsMapped,
         urlParams: this.getUrlParams(),
@@ -324,6 +326,7 @@ export default class DownerStandardDetailsListGroupedWebPart extends BaseClientS
       selectedViewFields,
       selectedGroupByFields,
       selectedSortByFields,
+      showItemsCount,
       selectedDetailsListSize,
       urlQueryActive,
       feedbackListName,
@@ -379,6 +382,13 @@ export default class DownerStandardDetailsListGroupedWebPart extends BaseClientS
               groupName: "Grouping and Sorting",
               groupFields: [
                 PropertyPaneHorizontalRule(),
+
+                PropertyPaneToggle("showItemsCount", {
+                  label: "Display items count in groups headers",
+                  checked: showItemsCount,
+                  offText: " ",
+                  onText: " "
+                }),
                 PropertyFieldMultiSelect("selectedGroupByFields", {
                   key: "selectedGroupByFields",
                   label: "Select columns to group by",

@@ -25,7 +25,8 @@ import {
   columnsMapper,
   groupsMapper,
   orderItemsByGroups,
-  getValueByField
+  getValueByField,
+  sortedItemsByGroups
 } from "../mappers/DetailsListComponentMapper";
 import {
   onRenderRow,
@@ -38,6 +39,8 @@ import { getFileExtension } from "../utils/getFileExtension";
 import { IQColumns } from "../interfaces/IQColumns";
 
 export const DetailsListComponent: React.FC = (): JSX.Element => {
+  const { detailsListSize } = React.useContext(AppSettingsContext);
+  const { urlParams, urlQueryActive } = React.useContext(UrlQueryFilterContext);
   const {
     listItems,
     selectedItems,
@@ -45,47 +48,56 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
     clearSelection,
     setClearSelection
   } = React.useContext(SPItemsContext);
-  const { viewFields, groupByFields } = React.useContext(SPFieldsContext);
-  const [collapseAll, setCollapseAll] = React.useState<boolean>(true);
+  const { viewFields, groupByFields, sortByFields } = React.useContext(
+    SPFieldsContext
+  );
+
+  const [collapseAll, setCollapseAll] = React.useState<boolean>(() => {
+    if (!urlQueryActive) {
+      return true;
+    }
+    const currentValue = urlParams.getValue("groupExpended");
+    return currentValue === "true" ? false : true;
+  });
   const [items, setItems] = React.useState<any[]>([]);
   const [groups, setGroups] = React.useState<IGroup[]>();
   const [columns, setColumns] = React.useState<IColumn[]>(
     columnsMapper(viewFields)
   );
-  const { detailsListSize } = React.useContext(AppSettingsContext);
-  const { urlParams, urlQueryActive } = React.useContext(UrlQueryFilterContext);
+
   const [selection] = React.useState<Selection>(
-    new Selection({
-      onSelectionChanged: () => {
-        const currentSelectedItems = selection.getSelection() as any[];
-        const updatedSelectedItems: ISelectedItem[] = [];
-        const mappedCurrentSelectedItems = currentSelectedItems.map(
-          currentSelectedItem =>
-            ({
-              selectedItemId: currentSelectedItem.Id,
-              selectedItemUniqueId: currentSelectedItem.UniqueId,
-              selectedItemName: currentSelectedItem.Name,
-              selectedItemDocId: currentSelectedItem.OData__dlc_DocId,
-              selectedItemUrlOpenInBrowser: currentSelectedItem.LinkingUrl,
-              selectedItemUrlDownload: currentSelectedItem.LinkingUrl
-                ? currentSelectedItem.LinkingUrl.split("?")[0]
-                : currentSelectedItem.ServerRelativeUrl,
-              selectedItemExt: getFileExtension(currentSelectedItem.Name)
-            } as ISelectedItem)
-        );
-        mappedCurrentSelectedItems.map(mappedCurrentSelectedItem => {
-          const ifIsIn = selectedItems.some(
-            selectedItem =>
-              selectedItem.selectedItemId ===
-              mappedCurrentSelectedItem.selectedItemDocId
+    () =>
+      new Selection({
+        onSelectionChanged: () => {
+          const currentSelectedItems = selection.getSelection() as any[];
+          const updatedSelectedItems: ISelectedItem[] = [];
+          const mappedCurrentSelectedItems = currentSelectedItems.map(
+            currentSelectedItem =>
+              ({
+                selectedItemId: currentSelectedItem.Id,
+                selectedItemUniqueId: currentSelectedItem.UniqueId,
+                selectedItemName: currentSelectedItem.Name,
+                selectedItemDocId: currentSelectedItem.OData__dlc_DocId,
+                selectedItemUrlOpenInBrowser: currentSelectedItem.LinkingUrl,
+                selectedItemUrlDownload: currentSelectedItem.LinkingUrl
+                  ? currentSelectedItem.LinkingUrl.split("?")[0]
+                  : currentSelectedItem.ServerRelativeUrl,
+                selectedItemExt: getFileExtension(currentSelectedItem.Name)
+              } as ISelectedItem)
           );
+          mappedCurrentSelectedItems.map(mappedCurrentSelectedItem => {
+            const ifIsIn = selectedItems.some(
+              selectedItem =>
+                selectedItem.selectedItemId ===
+                mappedCurrentSelectedItem.selectedItemDocId
+            );
 
-          if (!ifIsIn) updatedSelectedItems.push(mappedCurrentSelectedItem);
-        });
+            if (!ifIsIn) updatedSelectedItems.push(mappedCurrentSelectedItem);
+          });
 
-        setSelectedItems(updatedSelectedItems);
-      }
-    })
+          setSelectedItems(updatedSelectedItems);
+        }
+      })
   );
 
   const onColumnHeaderClick = (
@@ -139,12 +151,15 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
     );
   };
 
-  const filterColumns = (): void => {
+  const urlQueryDataFilter = (): void => {
+    let sortedItems = [];
+    let orderedItems = [];
     const qColumnsValues: IQColumns[] = [];
     if (!urlQueryActive) {
+      sortedItems = sortedItemsByGroups(listItems, sortByFields);
+      orderedItems = orderItemsByGroups(sortedItems, groupByFields);
       setColumns(columnsMapper(viewFields));
-      setItems(orderItemsByGroups(listItems, groupByFields));
-      //setQueryUrlFilterGroupByField("");
+      setItems(orderItemsByGroups(orderedItems, groupByFields));
       return;
     }
 
@@ -185,7 +200,6 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
             groupBy: false
           });
         } else if (currentValue && mappedColumn.key === "groupBy") {
-          //setQueryUrlFilterGroupByField(mappedColumn.name);
           qColumnsValues.push({
             columnName: mappedColumn.fieldName,
             value: currentValue,
@@ -215,56 +229,62 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
       let tempArray = [];
 
       qColumnsValues.map((filteredColumn, i: number) => {
-        const cleadValue = filteredColumn.groupBy
+        const clearedValue = filteredColumn.groupBy
           ? filteredColumn.value.replace(/%20/g, " ")
           : filteredColumn.value;
         if (i === 0) {
-          if (cleadValue === "NotEmpty") {
+          if (clearedValue === "NotEmpty") {
             tempArray = listItems.filter(item =>
               getValueByField(item, filteredColumn.columnName)
             );
-          } else if (cleadValue === "Empty") {
+          } else if (clearedValue === "Empty") {
             tempArray = listItems.filter(
               item => !getValueByField(item, filteredColumn.columnName)
             );
-          } else if (cleadValue === "All") {
+          } else if (clearedValue === "All") {
             tempArray = listItems;
           } else {
             tempArray = listItems.filter(
               item =>
-                getValueByField(item, filteredColumn.columnName) === cleadValue
+                getValueByField(item, filteredColumn.columnName) ===
+                clearedValue
             );
           }
         } else {
-          if (cleadValue === "NotEmpty") {
+          if (clearedValue === "NotEmpty") {
             tempArray = [
               ...tempArray.filter(item => item[filteredColumn.columnName])
             ];
-          } else if (cleadValue === "Empty") {
+          } else if (clearedValue === "Empty") {
             tempArray = tempArray.filter(
               item => !getValueByField(item, filteredColumn.columnName)
             );
-          } else if (cleadValue === "All") {
+          } else if (clearedValue === "All") {
             tempArray = tempArray;
           } else {
             tempArray = [
               ...tempArray.filter(
                 item =>
                   getValueByField(item, filteredColumn.columnName) ===
-                  cleadValue
+                  clearedValue
               )
             ];
           }
         }
       });
-      selection.setItems(orderItemsByGroups(fileredItems, groupByFields));
-      fileredItems.push(...tempArray);
+
+      sortedItems = sortedItemsByGroups(fileredItems, sortByFields);
+      orderedItems = orderItemsByGroups(sortedItems, groupByFields);
+      selection.setItems(orderedItems);
+      orderedItems.push(...tempArray);
       setColumns(fileredColumns);
-      setItems(orderItemsByGroups(fileredItems, groupByFields));
+      setItems(orderedItems);
     } else {
-      selection.setItems(orderItemsByGroups(listItems, groupByFields));
+      sortedItems = sortedItemsByGroups(listItems, sortByFields);
+      orderedItems = orderItemsByGroups(sortedItems, groupByFields);
+      selection.setItems(orderedItems);
       setColumns(columnsMapper(viewFields));
-      setItems(orderItemsByGroups(listItems, groupByFields));
+      setItems(sortedItems);
     }
   };
 
@@ -274,15 +294,8 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
   }, [clearSelection]);
 
   React.useEffect(() => {
-    // setItems(listItems);
-    // setColumns(columnsMapper(viewFields));
-    // selection.setItems(orderItemsByGroups(items, groupByFields));
-    filterColumns();
-  }, [listItems, viewFields]);
-
-  // React.useEffect(() => {
-  //   if (urlQueryActive) filterColumns();
-  // }, [urlQueryActive]);
+    urlQueryDataFilter();
+  }, [listItems, viewFields, sortByFields, urlQueryActive]);
 
   React.useEffect(() => {
     setGroups(
@@ -292,19 +305,8 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
     );
   }, [groupByFields, collapseAll]);
 
-  // React.useEffect(() => {
-  //   const sortedItems = sortBy(
-  //     listItems,
-  //     sortByFields.map(s => s.internalName)
-  //   );
-
-  //   const groupedItems = orderItemsByGroups(sortedItems, groupByFields);
-
-  //   setItems(groupedItems);
-  // }, [sortByFields]);
-
   React.useEffect(() => {
-    selection.setItems(orderItemsByGroups(items, groupByFields)); //
+    selection.setItems(orderItemsByGroups(items, groupByFields)); //might need it
     setGroups(
       groupByFields.length > 0
         ? groupsMapper(groupByFields, items, 0, collapseAll)
@@ -312,15 +314,11 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
     );
   }, [items]);
 
-  // React.useEffect(() => {
-  //   if (selection) selection.setItems(orderItemsByGroups(items, groupByFields));
-  // }, [selection]);
-
   return (
     <div style={{ height: detailsListSize, position: "relative" }}>
       <ScrollablePane scrollbarVisibility={ScrollbarVisibility.always}>
         <DetailsList
-          setKey="categoriesSet"
+          setKey="dataSet"
           items={orderItemsByGroups(items, groupByFields)}
           columns={columns}
           groups={groups}
@@ -338,14 +336,6 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
               onRenderTitle: (props: IGroupHeaderProps) =>
                 onGroupHeaderRender(props)
             }
-
-            // onRenderHeader: (props?: IDetailsGroupDividerProps, ) => {
-            //   return (
-            //     <div onClick={() => console.log("dddd")}>
-            //       {props.group.name}
-            //     </div>
-            //   );
-            // }
           }}
         />
       </ScrollablePane>

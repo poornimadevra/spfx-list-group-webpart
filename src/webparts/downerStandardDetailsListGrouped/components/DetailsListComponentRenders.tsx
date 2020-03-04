@@ -14,7 +14,6 @@ import {
   getCategoryIcon,
   getIconByFieldType
 } from "../styles/Icons";
-//import { linkStyle } from "../styles/styleObjects";
 import { ContextualMenuComponent } from "./ContextualMenuComponent";
 import { getFileExtension } from "../utils/getFileExtension";
 import { getUrlFileContext } from "../utils/getUrlFileContext";

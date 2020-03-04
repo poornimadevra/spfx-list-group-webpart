@@ -12,6 +12,7 @@ export interface IDownerStandardDetailsListGroupedWebPartProps {
   selectedViewId: string;
   selectedViewCamlQuery: string;
   selectedViewFields: string[];
+  showItemsCount: boolean;
   selectedGroupByFields: string[];
   selectedSortByFields: string[];
   selectedViewFieldsMapped: IViewField[];
