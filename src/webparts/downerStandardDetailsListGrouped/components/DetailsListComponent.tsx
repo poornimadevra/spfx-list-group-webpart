@@ -18,7 +18,7 @@ import {
   IGroupHeaderProps
 } from "office-ui-fabric-react";
 import { SPFieldsContext } from "../contexts/SPFieldsContext";
-import { SPItemsContext, ISelectedItem } from "../contexts/SPItemsContext";
+import { SPItemsContext } from "../contexts/SPItemsContext";
 import { AppSettingsContext } from "../contexts/AppSettingsContext";
 import { UrlQueryFilterContext } from "../contexts/UrlQueryFilterContext";
 import {
@@ -37,6 +37,7 @@ import {
 import { copyAndSort } from "../utils/copyAndSort";
 import { getFileExtension } from "../utils/getFileExtension";
 import { IQColumns } from "../interfaces/IQColumns";
+import { ISelectedItem } from "../interfaces/ISelectedItem";
 
 export const DetailsListComponent: React.FC = (): JSX.Element => {
   const { detailsListSize } = React.useContext(AppSettingsContext);
@@ -77,6 +78,7 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
                 selectedItemId: currentSelectedItem.Id,
                 selectedItemUniqueId: currentSelectedItem.UniqueId,
                 selectedItemName: currentSelectedItem.Name,
+                serverRelativeUrl: currentSelectedItem.ServerRelativeUrl,
                 selectedItemDocId: currentSelectedItem.OData__dlc_DocId,
                 selectedItemUrlOpenInBrowser: currentSelectedItem.LinkingUrl,
                 selectedItemUrlDownload: currentSelectedItem.LinkingUrl

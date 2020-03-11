@@ -16,11 +16,7 @@ import { copyLink } from "../utils/copyLink";
 import { ShareLinkForm } from "./ShareLinkForm";
 import { dowloadSingleFile } from "../utils/dowloadSingleFile";
 import { getZippedFiles } from "../utils/getZippedFiles";
-
-export interface IContextualMenuComponentProps {
-  selectedItemId: string | number;
-  docId: string;
-}
+import { IContextualMenuComponentProps } from "../interfaces/IContextualMenuComponentProps";
 
 export const ContextualMenuComponent: React.FC<IContextualMenuComponentProps> = React.memo(
   ({ selectedItemId, docId }): JSX.Element => {
@@ -121,11 +117,7 @@ export const ContextualMenuComponent: React.FC<IContextualMenuComponentProps> = 
                   dowloadSingleFile(selectedItems[0]),
                 onClick:
                   selectedItems.length > 1
-                    ? async () =>
-                        await getZippedFiles(
-                          selectedListInternalName,
-                          selectedItems.map(i => i.selectedItemName)
-                        )
+                    ? async () => await getZippedFiles(selectedItems)
                     : () => null,
                 style: {
                   display: selectedItems.length > 0 ? "inline-block" : "none"

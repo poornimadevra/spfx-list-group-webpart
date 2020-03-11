@@ -6,9 +6,9 @@ import {
 import { exportToExcel } from "../utils/exportToExcel";
 import { getDocTypeIcon } from "../styles/Icons";
 import { getOpentInLink } from "../utils/openInLink";
-import { ISelectedItem } from "../contexts/SPItemsContext";
 import { dowloadSingleFile } from "../utils/dowloadSingleFile";
 import { getZippedFiles } from "../utils/getZippedFiles";
+import { ISelectedItem } from "../interfaces/ISelectedItem";
 
 const getDisplayAttr = (selectedItems: ISelectedItem[]) => {
   return selectedItems.length === 1 &&
@@ -37,10 +37,10 @@ export const menuItems = (
 export const activeMenuItems = (
   selectedListInternalName: string,
   activateFeedbackForm: boolean,
-  onAlertMe: Function,
-  onCopyLink: Function,
-  onShareLink: Function,
-  onForm: Function,
+  onAlertMe: (value: boolean) => void,
+  onCopyLink: (value: boolean) => void,
+  onShareLink: (value: boolean) => void,
+  onForm: (value: boolean) => void,
   selectedItems: ISelectedItem[]
 ): ICommandBarItemProps[] => [
   {
@@ -116,11 +116,7 @@ export const activeMenuItems = (
     href: selectedItems.length === 1 && dowloadSingleFile(selectedItems[0]),
     onClick:
       selectedItems.length > 1
-        ? async () =>
-            await getZippedFiles(
-              selectedListInternalName,
-              selectedItems.map(i => i.selectedItemName)
-            )
+        ? async () => await getZippedFiles(selectedItems)
         : () => null
   },
 

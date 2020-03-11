@@ -1,15 +1,8 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import {
   sp,
-  SearchQuery,
-  SearchResults,
   ItemAddResult,
-  Web,
-  AttachmentFileInfo,
   PermissionKind,
-  ClientSideText,
-  ClientSidePage,
-  SPConfiguration,
   SearchSuggestQuery,
   SearchSuggestResult
 } from "@pnp/sp";
@@ -20,11 +13,8 @@ import {
   IHttpClientOptions
 } from "@microsoft/sp-http";
 import { camlQueryBuilder } from "../utils/camlQueryBuilder";
-
-export interface IFileBlob {
-  fileName: string;
-  fileContext: Blob;
-}
+import { IFile } from "../interfaces/IFile";
+import { IFileBlob } from "./interfaces";
 
 export class SharePointServiceManager {
   public context: WebPartContext;
@@ -58,6 +48,18 @@ export class SharePointServiceManager {
     };
 
     return await sp.profiles.clientPeoplePickerSearchUser(q);
+  };
+
+  public pnp_getLibraryFileBlob = async (files: IFile[]): Promise<any> => {
+    const res: IFileBlob[] = [];
+    for (const file of files) {
+      res.push({
+        fileName: file.name,
+        fileContext: await sp.web.getFileByServerRelativeUrl(file.url).getBlob()
+      });
+    }
+
+    return res;
   };
 
   public pnp_getUsersProfiles_SP = async (queryString?: string) => {
