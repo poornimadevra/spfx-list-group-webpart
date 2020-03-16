@@ -40,7 +40,9 @@ import { IQColumns } from "../interfaces/IQColumns";
 import { ISelectedItem } from "../interfaces/ISelectedItem";
 
 export const DetailsListComponent: React.FC = (): JSX.Element => {
-  const { detailsListSize } = React.useContext(AppSettingsContext);
+  const { detailsListSize, defaultColumnsWidth } = React.useContext(
+    AppSettingsContext
+  );
   const { urlParams, urlQueryActive } = React.useContext(UrlQueryFilterContext);
   const {
     listItems,
@@ -63,7 +65,7 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
   const [items, setItems] = React.useState<any[]>([]);
   const [groups, setGroups] = React.useState<IGroup[]>();
   const [columns, setColumns] = React.useState<IColumn[]>(
-    columnsMapper(viewFields)
+    columnsMapper(viewFields, defaultColumnsWidth)
   );
 
   const [selection] = React.useState<Selection>(
@@ -160,13 +162,13 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
     if (!urlQueryActive) {
       sortedItems = sortedItemsByGroups(listItems, sortByFields);
       orderedItems = orderItemsByGroups(sortedItems, groupByFields);
-      setColumns(columnsMapper(viewFields));
+      setColumns(columnsMapper(viewFields, defaultColumnsWidth));
       setItems(orderItemsByGroups(orderedItems, groupByFields));
       return;
     }
 
     const initialColumnsPlusGroupBy = [
-      ...columnsMapper(viewFields),
+      ...columnsMapper(viewFields, defaultColumnsWidth),
       ...groupByFields.map(
         gByField =>
           ({
@@ -285,7 +287,7 @@ export const DetailsListComponent: React.FC = (): JSX.Element => {
       sortedItems = sortedItemsByGroups(listItems, sortByFields);
       orderedItems = orderItemsByGroups(sortedItems, groupByFields);
       selection.setItems(orderedItems);
-      setColumns(columnsMapper(viewFields));
+      setColumns(columnsMapper(viewFields, defaultColumnsWidth));
       setItems(sortedItems);
     }
   };

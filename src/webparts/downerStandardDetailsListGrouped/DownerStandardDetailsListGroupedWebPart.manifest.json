@@ -46,6 +46,10 @@
           "large": "100vh",
           "autoSize": "80vh"
         },
+        "docIconColumnsSize": 50,
+        "nameColumnsSize": 450,
+        "documentTypeColumnsSize": 90,
+        "modifiedColumnsSize": 90,
         "activateFeedbackForm": false,
         "activateFooter": false,
         "feedbackListName": "",
