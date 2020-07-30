@@ -17,20 +17,28 @@ import { ShareLinkForm } from "./ShareLinkForm";
 import { dowloadSingleFile } from "../utils/dowloadSingleFile";
 import { getZippedFiles } from "../utils/getZippedFiles";
 import { IContextualMenuComponentProps } from "../interfaces/IContextualMenuComponentProps";
+import { VersionHistoryForm } from "../components/VersionHistoryForm";
+import { versionHistoryLink } from "../utils/versionHistoryLink";
+import { manageAlertLink } from "../utils/manageAlertLink";
 
 export const ContextualMenuComponent: React.FC<IContextualMenuComponentProps> = React.memo(
-  ({ selectedItemId, docId }): JSX.Element => {
+  ({ selectedItemId, docId, stream }): JSX.Element => {
     const contextualMneuDialogRef = React.useRef();
     const [isCopyLinkDialog, setIsCopyLinkDialog] = React.useState(false);
     const [isShareLinkDialog, setIsShareLinkDialog] = React.useState(false);
     const [isAlerMeDialog, setAlerMeDialog] = React.useState<boolean>(false);
     const [isFeedbackForm, setFeedbackForm] = React.useState<boolean>(false);
+    const [isVersionHistoryForm, setVersionHistoryForm] = React.useState(false);
     const { selectedListId, selectedListInternalName } = React.useContext(
       SPFieldsContext
     );
     const { selectedItems } = React.useContext(SPItemsContext);
     const { feedbackForm } = React.useContext(FeedbackContext);
-
+    console.log("selectedItems.length", selectedItems.length);
+    console.log(
+      "selectedItems[0].selectedItemExt",
+      selectedItems.length > 0 && selectedItems[0].selectedItemExt
+    );
     return (
       <div className="calloutArea">
         <ActionButton
@@ -50,7 +58,14 @@ export const ContextualMenuComponent: React.FC<IContextualMenuComponentProps> = 
                       title: "Open in browser",
                       href:
                         selectedItems.length > 0 &&
-                        selectedItems[0].selectedItemUrlOpenInBrowser,
+                        selectedItems[0].selectedItemExt === "aspx"
+                          ? getOpentInLink(
+                              selectedItems[0].selectedItemExt,
+                              selectedListInternalName,
+                              selectedItems[0].selectedItemName
+                            )
+                          : selectedItems.length > 0 &&
+                            selectedItems[0].selectedItemUrlOpenInBrowser,
                       target: "_blank",
                       ["data-interception"]: "off"
                     },
@@ -64,49 +79,44 @@ export const ContextualMenuComponent: React.FC<IContextualMenuComponentProps> = 
                           selectedItems[0].selectedItemExt,
                           selectedListInternalName,
                           selectedItems[0].selectedItemName
-                        )
+                        ),
+                      style:
+                        selectedItems.length > 0 &&
+                        selectedItems[0].selectedItemExt === "aspx"
+                          ? {
+                              display: "none"
+                            }
+                          : { display: "inline-block" }
                     }
                   ]
                 },
                 text: "Open",
                 style: {
-                  display:
-                    selectedItems.length === 1 &&
-                    selectedItems[0].selectedItemExt !== "aspx"
-                      ? "inline-block"
-                      : "none"
+                  display: selectedItems.length === 1 ? "inline-block" : "none"
                 }
               },
               {
                 key: "divider_1",
                 itemType: ContextualMenuItemType.Divider
               },
-              {
-                key: "share",
-                text: "Share",
-                onClick: () => setIsShareLinkDialog(true),
-                style: {
-                  display: selectedItems.length === 1 ? "inline-block" : "none"
-                }
-              },
+              // {
+              //   key: "share",
+              //   text: "Share",
+              //   onClick: () => setIsShareLinkDialog(true),
+              //   style: {
+              //     display:
+              //       selectedItems.length === 1 &&
+              //       selectedItems[0].selectedItemExt !== "aspx"
+              //         ? "inline-block"
+              //         : "none"
+              //   }
+              // },
               {
                 key: "copyLink",
                 text: "Copy link",
                 onClick: () => setIsCopyLinkDialog(true),
                 style: {
                   display: selectedItems.length === 1 ? "inline-block" : "none"
-                }
-              },
-              {
-                key: "alertMe",
-                text: "Alert Me",
-                onClick: () => setAlerMeDialog(true),
-                style: {
-                  display:
-                    selectedItems.length === 1 &&
-                    selectedItems[0].selectedItemExt !== "aspx"
-                      ? "inline-block"
-                      : "none"
                 }
               },
               {
@@ -124,17 +134,47 @@ export const ContextualMenuComponent: React.FC<IContextualMenuComponentProps> = 
                 }
               },
               {
+                key: "alertMe",
+                text: "Alert Me",
+                onClick: () => setAlerMeDialog(true),
+                style: {
+                  display:
+                    selectedItems.length === 1 &&
+                    selectedItems[0].selectedItemExt !== "aspx"
+                      ? "inline-block"
+                      : "none"
+                }
+              },
+              {
+                key: "manageAlerts",
+                text: "Manage My Alerts",
+                href: manageAlertLink(),
+                target: "_blank",
+                ["data-interception"]: "off"
+              },
+              {
                 key: "feedback",
                 text: "Feedback",
                 onClick: () => setFeedbackForm(true),
                 style: {
                   display:
-                    feedbackForm &&
-                    selectedItems.length > 0 &&
-                    selectedItems[0].selectedItemExt !== "aspx"
+                    feedbackForm && selectedItems.length > 0
                       ? "inline-block"
                       : "none"
                 }
+              },
+              {
+                key: "versionHistory",
+                text: "Version History",
+                cacheKey: "myCacheKey",
+                style: {
+                  display:
+                    selectedItems.length === 1 &&
+                    selectedItems[0].selectedItemExt !== "aspx"
+                      ? "inline-block"
+                      : "none"
+                },
+                onClick: () => setVersionHistoryForm(true)
               }
             ]
           }}
@@ -201,6 +241,19 @@ export const ContextualMenuComponent: React.FC<IContextualMenuComponentProps> = 
             onCloseForm={() => setFeedbackForm(false)}
             feedbackFormSettings={feedbackForm}
             docId={docId}
+            stream={stream}
+            selectedItems={selectedItems}
+          />
+        )}
+
+        {isVersionHistoryForm && (
+          <VersionHistoryForm
+            onDismiss={() => setVersionHistoryForm(false)}
+            isDialog={isVersionHistoryForm}
+            link={versionHistoryLink(
+              selectedListId,
+              selectedItems[0].selectedItemId.toString()
+            )}
           />
         )}
       </div>

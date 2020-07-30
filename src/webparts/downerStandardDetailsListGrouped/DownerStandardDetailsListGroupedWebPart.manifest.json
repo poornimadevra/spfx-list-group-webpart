@@ -53,8 +53,7 @@
         "activateFeedbackForm": false,
         "activateFooter": false,
         "feedbackListName": "",
-        "feedbackListFieldName": "",
-        "feedbackListFieldDocIdName": ""
+        "feedbackFields": []
       }
     }
   ]

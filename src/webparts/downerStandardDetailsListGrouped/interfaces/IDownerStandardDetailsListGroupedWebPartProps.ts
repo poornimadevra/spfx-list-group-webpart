@@ -1,4 +1,5 @@
 import { IViewField, IGroupByField, ISortByField } from "./IWebPartMappers";
+import { IFeedbackField } from "./IFeedbackField";
 
 export interface IDownerStandardDetailsListGroupedWebPartProps {
   urlQueryActive: boolean;
@@ -32,6 +33,5 @@ export interface IDownerStandardDetailsListGroupedWebPartProps {
   activateFeedbackForm: boolean;
   activateFooter: boolean;
   feedbackListName: string;
-  feedbackListFieldName: string;
-  feedbackListFieldDocIdName: string;
+  feedbackFields: IFeedbackField[];
 }

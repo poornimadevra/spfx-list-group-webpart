@@ -14,7 +14,7 @@ export const AlertMeForm: React.FC<IAlertMeFormProps> = ({
 }): JSX.Element => {
   const [iframeRef, setIframeRef] = React.useState();
   const [aspnetForm, setAspnetForm] = React.useState();
-
+  console.log("link", link);
   const onDismissTimer = () => {
     setAspnetForm(null);
     setTimeout(() => {
@@ -23,6 +23,7 @@ export const AlertMeForm: React.FC<IAlertMeFormProps> = ({
   };
   React.useEffect(() => {
     setIframeRef(iframeRef);
+    console.log("iframeRef", iframeRef);
   }, [iframeRef]);
 
   const iframeOnLoad = (): void => {

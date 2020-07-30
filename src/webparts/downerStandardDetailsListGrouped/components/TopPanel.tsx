@@ -17,6 +17,8 @@ import { ShareLinkForm } from "../components/ShareLinkForm";
 import { menuItems, activeMenuItems } from "../constances/topMenu";
 import { copyLink } from "../utils/copyLink";
 import { alertMeLink } from "../utils/alertMeLink";
+import { VersionHistoryForm } from "../components/VersionHistoryForm";
+import { versionHistoryLink } from "../utils/versionHistoryLink";
 
 export const topMenuStyles = (): ICommandBarStyles => {
   const customStyle: ICommandBarStyles = {} as ICommandBarStyles;
@@ -31,6 +33,8 @@ export const TopPanel = (props): JSX.Element => {
   const [isShareLinkDialog, setIsShareLinkDialog] = React.useState(false);
   const [isAlertMeDialog, setIsAlertMeDialog] = React.useState(false);
   const [isFeedBackForm, setIsFeedBackForm] = React.useState(false);
+  const [isVersionHistoryForm, setVersionHistoryForm] = React.useState(false);
+  const [isManageAlerts, setisManageAlerts] = React.useState(false);
   const {
     selectedItems,
     setSelectedItems,
@@ -39,6 +43,9 @@ export const TopPanel = (props): JSX.Element => {
   const { viewId, selectedListId, selectedListInternalName } = React.useContext(
     SPFieldsContext
   );
+
+  console.log("props from topPanel", props);
+  console.log("selectedItems", selectedItems);
 
   return (
     <>
@@ -54,9 +61,10 @@ export const TopPanel = (props): JSX.Element => {
                     setIsCopyLinkDialog,
                     setIsShareLinkDialog,
                     setIsFeedBackForm,
+                    setVersionHistoryForm,
                     selectedItems
                   )
-                : menuItems(selectedListId, viewId)
+                : menuItems(selectedListId, viewId, setIsFeedBackForm)
             }
             styles={topMenuStyles}
           />
@@ -80,7 +88,11 @@ export const TopPanel = (props): JSX.Element => {
           isOpen={isFeedBackForm}
           onCloseForm={() => setIsFeedBackForm(false)}
           feedbackFormSettings={feedbackForm}
-          docId={selectedItems[0].selectedItemDocId}
+          docId={
+            selectedItems.length > 0 ? selectedItems[0].selectedItemDocId : ""
+          }
+          stream={selectedListInternalName}
+          selectedItems={selectedItems}
         />
       )}
       <div className="calloutArea" ref={topPanelDialogRef}>
@@ -125,6 +137,17 @@ export const TopPanel = (props): JSX.Element => {
             onDismiss={() => setIsAlertMeDialog(false)}
             isDialog={isAlertMeDialog}
             link={alertMeLink(
+              selectedListId,
+              selectedItems[0].selectedItemId.toString()
+            )}
+          />
+        )}
+
+        {isVersionHistoryForm && (
+          <VersionHistoryForm
+            onDismiss={() => setVersionHistoryForm(false)}
+            isDialog={isVersionHistoryForm}
+            link={versionHistoryLink(
               selectedListId,
               selectedItems[0].selectedItemId.toString()
             )}

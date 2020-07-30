@@ -37,6 +37,7 @@
     "office-ui-fabric-react": "6.189.2",
     "react": "16.8.5",
     "react-dom": "16.8.5",
+    "sweetalert2": "^9.15.2",
     "xml2js": "^0.4.22"
   },
   "resolutions": {

@@ -13,8 +13,13 @@ import {
   PropertyPaneTextField,
   IPropertyPaneDropdownOption,
   PropertyPaneHorizontalRule,
-  PropertyPaneToggle
+  PropertyPaneToggle,
+  PropertyPaneCheckbox
 } from "@microsoft/sp-webpart-base";
+import {
+  PropertyFieldCollectionData,
+  CustomCollectionFieldType
+} from "@pnp/spfx-property-controls/lib/PropertyFieldCollectionData";
 import { UrlQueryParameterCollection } from "@microsoft/sp-core-library";
 import { PropertyFieldMultiSelect } from "@pnp/spfx-property-controls/lib/PropertyFieldMultiSelect";
 import { DetailsListApp } from "./components/DetailsListApp";
@@ -31,6 +36,7 @@ import { IRootFolder } from "./interfaces/IRootFolder";
 import { IDownerStandardDetailsListGroupedWebPartProps } from "./interfaces/IDownerStandardDetailsListGroupedWebPartProps";
 import { IFolder } from "./interfaces/IFolder";
 import { PropertyFieldNumber } from "@pnp/spfx-property-controls/lib/PropertyFieldNumber";
+import { IFeedbackField } from "./interfaces/IFeedbackField";
 
 export default class DownerStandardDetailsListGroupedWebPart extends BaseClientSideWebPart<
   IDownerStandardDetailsListGroupedWebPartProps
@@ -59,8 +65,7 @@ export default class DownerStandardDetailsListGroupedWebPart extends BaseClientS
       selectedSortByFieldsMapped,
       urlQueryActive,
       activateFeedbackForm,
-      feedbackListFieldName,
-      feedbackListFieldDocIdName,
+      feedbackFields,
       feedbackListName,
       selectedDetailsListSize,
       activateFooter,
@@ -94,8 +99,7 @@ export default class DownerStandardDetailsListGroupedWebPart extends BaseClientS
         feedbackForm: activateFeedbackForm
           ? {
               activateFeedbackForm,
-              feedbackListFieldName,
-              feedbackListFieldDocIdName,
+              feedbackFields,
               feedbackListName
             }
           : undefined,
@@ -341,8 +345,7 @@ export default class DownerStandardDetailsListGroupedWebPart extends BaseClientS
       selectedDetailsListSize,
       urlQueryActive,
       feedbackListName,
-      feedbackListFieldName,
-      feedbackListFieldDocIdName,
+      feedbackFields,
       activateFeedbackForm,
       activateFooter,
       docIconColumnsSize,
@@ -451,21 +454,82 @@ export default class DownerStandardDetailsListGroupedWebPart extends BaseClientS
                   label: "List title",
                   value: feedbackListName
                 }),
-                PropertyPaneTextField("feedbackListFieldName", {
-                  label: "Column internal name for Feedback body",
-                  value: feedbackListFieldName
+                PropertyFieldCollectionData("feedbackFields", {
+                  key: "feedbackFields",
+                  label: "Feedback Fields",
+                  panelHeader: "Configure internal column names for:",
+                  manageBtnLabel: "Configure feedback",
+                  value: this.properties.feedbackFields,
+                  fields: [
+                    {
+                      id: "title",
+                      title: "Title",
+                      type: CustomCollectionFieldType.string,
+                      required: true
+                    },
+                    {
+                      id: "internalColumnName",
+                      title: "Internal column name",
+                      type: CustomCollectionFieldType.string,
+                      required: true
+                    },
+                    {
+                      id: "type",
+                      title: "Type",
+                      type: CustomCollectionFieldType.dropdown,
+                      options: [
+                        {
+                          key: "text",
+                          text: "Text"
+                        },
+                        {
+                          key: "dropDown",
+                          text: "Drop Down"
+                        }
+                      ],
+                      required: true
+                    },
+                    {
+                      id: "valueMarker",
+                      title: "Value Marker",
+                      type: CustomCollectionFieldType.dropdown,
+                      options: [
+                        {
+                          key: "displayName",
+                          text: "Display User Name"
+                        },
+                        {
+                          key: "email",
+                          text: "Display User Email"
+                        },
+                        {
+                          key: "department",
+                          text: "User Department"
+                        },
+                        {
+                          key: "feedbackType",
+                          text: "Feedback Type"
+                        },
+                        {
+                          key: "feedbackCategory",
+                          text: "Feedback Category"
+                        },
+                        {
+                          key: "feedbackTextfield",
+                          text: "Feedback Textfield"
+                        }
+                      ],
+                      required: true
+                    }
+                  ],
+                  disabled: false
                 }),
-                PropertyPaneTextField("feedbackListFieldDocIdName", {
-                  label: "Column internal name for Document Id",
-                  value: feedbackListFieldDocIdName
-                }),
-
                 PropertyPaneToggle("activateFeedbackForm", {
                   label: `${
                     activateFeedbackForm ? "Hide" : "Show"
                   } feedback from`,
                   checked: activateFeedbackForm,
-                  disabled: !feedbackListFieldDocIdName || !feedbackListName,
+                  disabled: !feedbackFields || !feedbackListName,
                   offText: " ",
                   onText: " "
                 })

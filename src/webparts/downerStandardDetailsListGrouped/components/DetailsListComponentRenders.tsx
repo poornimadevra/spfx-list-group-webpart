@@ -99,6 +99,7 @@ export const onRenderItemColumn = (
             <ContextualMenuComponent
               selectedItemId={item.Id}
               docId={item.DocId}
+              stream={item.selectedListTitle}
             />
           </Stack>
         </span>

@@ -245,8 +245,8 @@ export const GroupHeaderFilterForm = ({ listItems, groupLevel, groupKey }) => {
         </Stack>
         <div className={scssStyles.collapseContol}>
           <Toggle
-            onText="Collapsed"
-            offText="Expand"
+            onText="Expanded"
+            offText="Collasped"
             checked={layoutQuerySettings.groupExpended}
             onChange={onCollapseChange}
           />

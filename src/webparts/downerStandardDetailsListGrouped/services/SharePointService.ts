@@ -14,6 +14,7 @@ import {
 } from "@microsoft/sp-http";
 import { camlQueryBuilder } from "../utils/camlQueryBuilder";
 import { IFileBlob, IFile } from "./interfaces";
+import { IFilePickerResult } from "@pnp/spfx-controls-react/lib/FilePicker";
 
 export class SharePointServiceManager {
   public context: WebPartContext;
@@ -47,6 +48,16 @@ export class SharePointServiceManager {
     };
 
     return await sp.profiles.clientPeoplePickerSearchUser(q);
+  };
+
+  public pnp_getFolderRelativeUrl = async (
+    file: string,
+    filePicker: IFilePickerResult,
+    res: any
+  ) => {
+    return await sp.web
+      .getFolderByServerRelativeUrl(file)
+      .files.add(filePicker.fileName, res, true);
   };
 
   public pnp_getLibraryFileBlob = async (files: IFile[]): Promise<any> => {
