@@ -64,7 +64,13 @@ export const TopPanel = (props): JSX.Element => {
                     setVersionHistoryForm,
                     selectedItems
                   )
-                : menuItems(selectedListId, viewId, setIsFeedBackForm)
+                : menuItems(
+                    selectedListId,
+                    viewId,
+                    setIsFeedBackForm,
+                    feedbackForm ? feedbackForm.activateFeedbackForm : false,
+                    selectedItems
+                  )
             }
             styles={topMenuStyles}
           />
@@ -116,7 +122,7 @@ export const TopPanel = (props): JSX.Element => {
           </Callout>
         )}
 
-        {isShareLinkDialog && (
+        {/* {isShareLinkDialog && (
           <Callout
             gapSpace={0}
             target={topPanelDialogRef.current}
@@ -130,7 +136,7 @@ export const TopPanel = (props): JSX.Element => {
               itemId={selectedItems[0].selectedItemId.toString()}
             />
           </Callout>
-        )}
+        )} */}
 
         {isAlertMeDialog && (
           <AlertMeForm

@@ -20,6 +20,20 @@ import { IContextualMenuComponentProps } from "../interfaces/IContextualMenuComp
 import { VersionHistoryForm } from "../components/VersionHistoryForm";
 import { versionHistoryLink } from "../utils/versionHistoryLink";
 import { manageAlertLink } from "../utils/manageAlertLink";
+import { ISelectedItem } from "../interfaces/ISelectedItem";
+
+const checkMultiForAspx = (selectedItems: ISelectedItem[]) => {
+  let results = "";
+  for (let i = 0; i < selectedItems.length; i++) {
+    if (selectedItems[i].selectedItemExt === "aspx") {
+      results = "none";
+      break;
+    } else {
+      results = "inline-block";
+    }
+  }
+  return results;
+};
 
 export const ContextualMenuComponent: React.FC<IContextualMenuComponentProps> = React.memo(
   ({ selectedItemId, docId, stream }): JSX.Element => {
@@ -130,7 +144,8 @@ export const ContextualMenuComponent: React.FC<IContextualMenuComponentProps> = 
                     ? async () => await getZippedFiles(selectedItems)
                     : () => null,
                 style: {
-                  display: selectedItems.length > 0 ? "inline-block" : "none"
+                  display:
+                    selectedItems.length > 0 && checkMultiForAspx(selectedItems)
                 }
               },
               {
@@ -158,7 +173,7 @@ export const ContextualMenuComponent: React.FC<IContextualMenuComponentProps> = 
                 onClick: () => setFeedbackForm(true),
                 style: {
                   display:
-                    feedbackForm && selectedItems.length > 0
+                    feedbackForm && selectedItems.length === 1
                       ? "inline-block"
                       : "none"
                 }

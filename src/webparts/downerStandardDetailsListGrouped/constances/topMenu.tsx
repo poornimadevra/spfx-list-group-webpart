@@ -18,10 +18,25 @@ const getDisplayAttr = (selectedItems: ISelectedItem[]) => {
     : "none";
 };
 
+const checkMultiForAspx = (selectedItems: ISelectedItem[]) => {
+  let results = "";
+  for (let i = 0; i < selectedItems.length; i++) {
+    if (selectedItems[i].selectedItemExt === "aspx") {
+      results = "none";
+      break;
+    } else {
+      results = "inline-block";
+    }
+  }
+  return results;
+};
+
 export const menuItems = (
   listId: string,
   viewId: string,
-  onForm: (value: boolean) => void
+  onForm: (value: boolean) => void,
+  activateFeedbackForm,
+  selectedItems
 ): ICommandBarItemProps[] => [
   {
     key: "exportTo",
@@ -50,7 +65,11 @@ export const menuItems = (
     cacheKey: "myCacheKey",
     iconProps: { iconName: "Feedback" },
     style: {
-      backgroundColor: "#fff"
+      backgroundColor: "#fff",
+      display:
+        activateFeedbackForm && selectedItems.length < 2
+          ? "inline-block"
+          : "none"
     },
     onClick: () => onForm(true)
   }
@@ -150,7 +169,10 @@ export const activeMenuItems = (
     text: "Download",
     cacheKey: "myCacheKey",
     iconProps: { iconName: "Download" },
-    style: { backgroundColor: "#fff" },
+    style: {
+      backgroundColor: "#fff",
+      display: checkMultiForAspx(selectedItems)
+    },
     href: selectedItems.length === 1 && dowloadSingleFile(selectedItems[0]),
     onClick:
       selectedItems.length > 1
@@ -190,7 +212,8 @@ export const activeMenuItems = (
     cacheKey: "myCacheKey",
     iconProps: { iconName: "Feedback" },
     style: {
-      backgroundColor: "#fff"
+      backgroundColor: "#fff",
+      display: selectedItems.length === 1 ? "inline-block" : "none"
     },
     onClick: () => onForm(true)
   },

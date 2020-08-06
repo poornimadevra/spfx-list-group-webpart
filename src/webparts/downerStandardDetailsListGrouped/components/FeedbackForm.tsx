@@ -22,7 +22,12 @@ import {
 import { fieldColumnMapper } from "../mappers/FeedbackFormMapper";
 import { IFeedbackFormState } from "../interfaces/IFeedbackFormState";
 import { AttachmentFileInfo } from "@pnp/sp";
-
+import {
+  getFeedbackTypes,
+  getFeedbackCategoriesPage,
+  getFeedbackCategoriesDocument,
+  getFeedbackAreas
+} from "../utils/getLookUpFields";
 const formImage: string = require("../images/FormResource.png");
 
 const itemAlignmentsStackTokens: IStackTokens = {
@@ -38,6 +43,9 @@ export const FeedbackForm = ({
   selectedItems
 }: IFeedbackFormProps): JSX.Element => {
   const [isDisable, setIsDisable] = React.useState<boolean>(false);
+  const [isCategoryTypeDisable, setIsCategoryTypeDisable] = React.useState<
+    boolean
+  >(false);
   const [listOfAttachments, setListOfAttachments] = React.useState<
     AttachmentFileInfo[]
   >([]);
@@ -84,7 +92,7 @@ export const FeedbackForm = ({
         setfeedbackFormValues({
           DocumentName: documentNames,
           DocumentLinks: tempDocuLinks,
-          Title: SharePointService.context.pageContext.user.displayName,
+          Title: "View full submission",
           Email: SharePointService.context.pageContext.user.email,
           Department: res,
           FeedbackType: "",
@@ -97,43 +105,10 @@ export const FeedbackForm = ({
           feedbackCategorySelectionKeys: []
         });
         setIsDisable(true);
+        setIsCategoryTypeDisable(true);
       }
     );
   }, []);
-
-  const getFeedbackTypes = async (): Promise<any> => {
-    try {
-      return await SharePointService.pnp_getListItems("LOOKUPFeedbackType");
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const getFeedbackCategoriesPage = async (): Promise<any> => {
-    try {
-      return await SharePointService.pnp_getListItems("LOOKUPFeedbackCategory");
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const getFeedbackCategoriesDocument = async (): Promise<any> => {
-    try {
-      return await SharePointService.pnp_getListItems(
-        "LOOKUPFeedbackCategoryDocument"
-      );
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const getFeedbackAreas = async (): Promise<any> => {
-    try {
-      return await SharePointService.pnp_getListItems("LOOKUPFeedbackArea");
-    } catch (error) {
-      throw error;
-    }
-  };
 
   React.useEffect(() => {
     getFeedbackTypes().then(r => {
@@ -206,7 +181,6 @@ export const FeedbackForm = ({
   ) => {
     const currentId = e.target["id"] as string;
     if (currentId === "feedbackTypeSelectionKeys") {
-      console.log("inputValue.text", inputValue.text);
       if (inputValue.text.includes("page")) {
         setIsDisable(false);
         setFeedbackCategories(feedbackCategoryForPage);
@@ -214,6 +188,10 @@ export const FeedbackForm = ({
         setIsDisable(true);
         setFeedbackCategories(feedbackCategoryForDocuments);
       }
+
+      inputValue.text.includes("Select")
+        ? setIsCategoryTypeDisable(true)
+        : setIsCategoryTypeDisable(false);
       setfeedbackFormValues({
         ...feedbackFormValues,
         feedbackTypeSelectionKeys: inputValue
@@ -396,6 +374,7 @@ export const FeedbackForm = ({
           {_onRenderDisplayFormFields()}
 
           <Dropdown
+            isDisabled={isCategoryTypeDisable}
             placeholder="Select an option"
             multiSelect
             label="Feedback Category:"
@@ -447,7 +426,8 @@ export const FeedbackForm = ({
           />
 
           <FilePicker
-            bingAPIKey="<BING API KEY>"
+            bingAPIKey="ArMip2E-OGmxgNXdjqFvjKPsIkUu8tfWlsaIROS3vWkl26KCQpVdVLD2ua63-bOr"
+            hideWebSearchTab={true}
             accepts={[
               ".gif",
               ".jpg",
@@ -475,11 +455,15 @@ export const FeedbackForm = ({
 
           {feedbackFormValues.feedbackAttachments && (
             <div>
-              <Label>Attachments:</Label>
+              <label style={{ fontWeight: "bold" }}>Attachment(s):</label>
               <ul>
                 {feedbackFormValues.feedbackAttachments.map(file => {
                   return (
-                    <li>
+                    <li
+                      style={{
+                        listStyle: "none"
+                      }}
+                    >
                       {file.name}{" "}
                       <Link value={file.name} onClick={_removeAttachments}>
                         remove
